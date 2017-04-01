@@ -16,7 +16,7 @@ int main(int argc, const char* argv[])
 {
 	int ret = 0;
 	pid_t pid;
-	int lat = 200;
+	int lat = 250;
 
 	if (argc != 1 && argc != 2)
 	{
@@ -54,7 +54,6 @@ int main(int argc, const char* argv[])
 		int ac, tmp;
 		FILE* f = NULL;
 		int fd  = -1;
-		int i;
 
 		f = fopen(acname, "r");
 		if (!f || fscanf(f, "%d", &ac)!=1 || ac!=1) goto wait;
@@ -63,12 +62,8 @@ int main(int argc, const char* argv[])
 		if (fd < 0) goto wait;
 		if (write(fd, &lat, sizeof(lat)) != sizeof(lat)) goto wait;
 
-		for (i=0; i<100; i++) usleep(10000);
-		goto done;
-
 wait:
 		sleep(5);
-done:
 		if (f)    fclose(f); f  = NULL;
 
 		f = fopen(tmpname, "r");
