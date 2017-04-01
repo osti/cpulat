@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+# Copyright 1999-2017 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+start() {
+	ebegin "Starting cpulat"
+	start-stop-daemon --start --quiet --pidfile /var/run/cpulat.pid --exec /usr/local/sbin/cpulat -- -d
+	eend ${?}
+}
+
+stop() {
+	ebegin "Stopping cpulat"
+	start-stop-daemon --stop --quiet --pidfile /var/run/cpulat.pid
+	eend ${?}
+}
