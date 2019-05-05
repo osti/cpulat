@@ -48,7 +48,7 @@ int main(int argc, const char* argv[])
 			FILE* f = NULL;
 			f = fopen(pidfile, "w");
 			if (f) fprintf(f, "%d\n", pid);
-			if (f) fclose(f); f = NULL;
+			if (f) {fclose(f); f = NULL;}
 			fprintf(stdout, "forking into background, pid %d\n", pid);
 			goto cleanup;
 		}
@@ -80,7 +80,7 @@ int main(int argc, const char* argv[])
 
 wait:
 		sleep(conf.sleeptime);
-		if (f)    fclose(f); f  = NULL;
+		if (f) { fclose(f); f  = NULL;}
 
 		f = fopen(conf.tmpname, "r");
 		if (f && fscanf(f, "%d", &tmp)==1 && back==0)
@@ -89,8 +89,8 @@ wait:
 			fflush(stdout);
 		}
 
-		if (f)    fclose(f); f  = NULL;
-		if (fd>0) close(fd); fd = -1;
+		if (f)    {fclose(f); f  = NULL;}
+		if (fd>0) {close(fd); fd = -1;}
 	}
 	
 cleanup:
@@ -103,8 +103,8 @@ int config(const char* confname)
 	FILE* f = fopen(confname, "r");
 	if (f == NULL) goto cleanup;
 
-	if (conf.acname)  free(conf.acname);  conf.acname  = NULL;
-	if (conf.tmpname) free(conf.tmpname); conf.tmpname = NULL;
+	if (conf.acname)  {free(conf.acname);  conf.acname  = NULL;}
+	if (conf.tmpname) {free(conf.tmpname); conf.tmpname = NULL;}
 
 	while (!feof(f))
 	{
@@ -124,6 +124,6 @@ int config(const char* confname)
 	}
 
 cleanup:
-	if (f) fclose(f); f = NULL;
+	if (f) {fclose(f); f = NULL;}
 	return ret;
 }
